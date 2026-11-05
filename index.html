@@ -475,6 +475,7 @@ $$('.split').forEach(el=>{const t=el.textContent;el.textContent='';[...t].forEac
 const GH='https://github.com/nishantchakravarthy/';
 const PROJECTS=[
   {t:'Adaptive UI',y:'2026',d:'A background engine that reads how you use your computer (typing speed, mouse movement, scrolling) and changes on-screen overlays to match: Active, Focus, Idle or Error.',m:[['<10ms','pipeline latency'],['4','behaviour states'],['OS-level','input capture']],tags:['Python','pynput','CustomTkinter','FSM'],c:['#33e1ff','#06121a'],k:'states',url:GH+'Adaptive-UI'},
+  {t:'Neurovia',y:'2026',d:'A team-built platform for early dementia screening and patient support. I worked on frontend features, database integration and the Git workflow.',m:[['AI','screening platform'],['Team','collaboration'],['Live','on Vercel']],tags:['JavaScript','Python','SQL','Vite'],c:['#ff5fa2','#1a0510'],k:'neuro',url:'https://neurovia-tawny.vercel.app',cta:'Visit live site '},
   {t:'EduMetrics',y:'2026',d:'An e-learning analytics platform: a Python pipeline cleans and analyses 2,500 courses, predicts dropout with logistic regression, and feeds a dark, interactive dashboard.',m:[['2,500','courses analysed'],['81.9%','dropout model accuracy'],['15 yrs','of trend data']],tags:['Python','pandas','scikit-learn','Plotly','JavaScript'],c:['#8b7bff','#0b0820'],k:'chart',url:GH+'Edumetrics'},
   {t:'Car Inventory',y:'2025',d:'A web development mini project for managing a car dealership\'s stock: listing, adding and tracking vehicles.',m:[['WDT','mini project'],['CRUD','inventory flows'],['Web','HTML · CSS · JS']],tags:['HTML','CSS','JavaScript'],c:['#ffb02e','#1a1003'],k:'table',url:GH+'Car-Inventory'},
   {t:'This Site',y:'2026',d:'The portfolio you are on: four pages, each with its own real-time 3D scene written with Three.js and custom GLSL shaders.',m:[['4','3D scenes'],['9,000','live particles'],['GLSL','custom shaders']],tags:['Three.js','WebGL','GLSL','JavaScript'],c:['#ff3d2e','#1a0503'],k:'wire',url:'https://github.com/nishantchakravarthy'}
@@ -591,6 +592,9 @@ function initGL(){
       cols.forEach((cl,k)=>{const cx0=W*.47+(k%2)*230,cy0=150+Math.floor(k/2)*200;x.globalAlpha=1;x.strokeStyle=cl;x.lineWidth=4;x.beginPath();x.arc(cx0,cy0,70,0,7);x.stroke();x.globalAlpha=.18;x.fillStyle=cl;x.fill();x.globalAlpha=1;x.fillStyle=cl;x.font='600 20px JetBrains Mono, monospace';x.textAlign='center';x.fillText(names[k],cx0,cy0+7);x.textAlign='left';});
       x.strokeStyle='rgba(236,235,230,.5)';x.lineWidth=2;x.setLineDash([8,8]);[[0,1],[1,3],[3,2],[2,0],[0,3]].forEach(([u,v])=>{const P=k=>[W*.47+(k%2)*230,150+Math.floor(k/2)*200];const A=P(u),B=P(v),dx=B[0]-A[0],dy=B[1]-A[1],L=Math.hypot(dx,dy);x.beginPath();x.moveTo(A[0]+dx/L*78,A[1]+dy/L*78);x.lineTo(B[0]-dx/L*78,B[1]-dy/L*78);x.stroke();});x.setLineDash([]);}
     if(p.k==='chart'){x.globalAlpha=.9;x.strokeStyle=a;x.lineWidth=2;x.strokeRect(W*.4-2,48,W*.56+4,H*.56+4);const img=new Image();img.onload=()=>{x.globalAlpha=1;x.drawImage(img,W*.4,50,W*.56,H*.56);tx.needsUpdate=true;};img.src=CHART_SRC;}
+    if(p.k==='neuro'){const nodes=[];for(let k=0;k<34;k++){const a=Math.random()*Math.PI*2,r=Math.sqrt(Math.random());nodes.push([W*.7+Math.cos(a)*r*230,H*.42+Math.sin(a)*r*150]);}
+      x.lineWidth=1.5;for(let i2=0;i2<nodes.length;i2++)for(let j2=i2+1;j2<nodes.length;j2++){const d=Math.hypot(nodes[i2][0]-nodes[j2][0],nodes[i2][1]-nodes[j2][1]);if(d<95){x.globalAlpha=.55*(1-d/95);x.beginPath();x.moveTo(...nodes[i2]);x.lineTo(...nodes[j2]);x.stroke();}}
+      nodes.forEach((q,i2)=>{x.globalAlpha=1;x.beginPath();x.arc(q[0],q[1],i2%5===0?7:3.5,0,7);x.fill();});}
     if(p.k==='table'){x.font='18px JetBrains Mono, monospace';const rows=[['ID','MODEL','YEAR','STOCK'],['001','Sedan LX','2024','12'],['002','Hatch S','2023','07'],['003','SUV Pro','2025','04'],['004','Coupe GT','2022','02'],['005','EV Plus','2025','09']];
       rows.forEach((r,ri)=>{x.globalAlpha=ri?.85:1;x.fillStyle=ri?'#ecebe6':a;r.forEach((c2,ci)=>x.fillText(c2,W*.42+[0,80,250,350][ci],90+ri*52));x.globalAlpha=.25;x.fillStyle=a;x.fillRect(W*.42,102+ri*52,460,1);});}
     if(p.k==='wire'){x.globalAlpha=1;x.lineWidth=2;const cx0=W*.7,cy0=H*.42,Rr=170,pts=[];const ph=(1+Math.sqrt(5))/2;
@@ -759,7 +763,7 @@ $('#pTot').textContent=String(PROJECTS.length).padStart(2,'0');
 function showProject(i){const p=PROJECTS[i],t=$('#pTitle');t.classList.add('swap');
   setTimeout(()=>{t.textContent=p.t;t.classList.remove('swap');},180);
   $('#pIdx').textContent=String(i+1).padStart(2,'0');$('#pYear').textContent=p.y;$('#pDesc').textContent=p.d;
-  $('#pTags').innerHTML=p.tags.map(x=>`<span>${x}</span>`).join('');$('#pMetrics').innerHTML=p.m.map(([v,l])=>`<div><b>${v}</b><small>${l}</small></div>`).join('');$('#pLink').href=p.url;$('#pLink').firstChild.textContent=p.k==='wire'?'More on GitHub ':'View on GitHub ';
+  $('#pTags').innerHTML=p.tags.map(x=>`<span>${x}</span>`).join('');$('#pMetrics').innerHTML=p.m.map(([v,l])=>`<div><b>${v}</b><small>${l}</small></div>`).join('');$('#pLink').href=p.url;$('#pLink').firstChild.textContent=p.cta||(p.k==='wire'?'More on GitHub ':'View on GitHub ');
   [...dots.children].forEach((d,j)=>d.classList.toggle('on',j===i));}
 showProject(0);
 const mBtns=$('#mBtns');FORMS.forEach((f,i)=>{const b=document.createElement('button');b.type='button';b.textContent=f.n;b.setAttribute('data-hover','');b.addEventListener('click',e=>{e.stopPropagation();if(gl&&gl.setForm)gl.setForm(i);else showForm(i);});mBtns.appendChild(b);});
@@ -878,24 +882,30 @@ window.__introActive=true;
       const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(target,3));g.setAttribute('aStart',new THREE.BufferAttribute(startP,3));g.setAttribute('aRand',new THREE.BufferAttribute(rand,1));g.setAttribute('aLum',new THREE.BufferAttribute(lumA,1));
       const U={uProg:{value:0},uOut:{value:0},uT:{value:0},uPR:{value:R.getPixelRatio()},uSize:{value:small?12:10.5},uScan:{value:-1},uVis:{value:0}};
       const pts=new THREE.Points(g,new THREE.ShaderMaterial({uniforms:U,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,
-        vertexShader:`attribute vec3 aStart;attribute float aRand;attribute float aLum;uniform float uProg,uOut,uT,uPR,uSize,uScan,uVis;varying float vA;varying float vL;varying float vHot;
-          void main(){float p=clamp(uProg*1.6-aRand*.6,0.,1.);p=p*p*(3.-2.*p);
-            vec3 pos=mix(aStart,position,p);
-            pos+=vec3(sin(uT*1.7+aRand*50.),cos(uT*1.3+aRand*37.),sin(uT*1.1+aRand*21.))*(.004+.03*(1.-p));
+        vertexShader:`attribute vec3 aStart;attribute float aRand;attribute float aLum;uniform float uProg,uOut,uT,uPR,uSize,uScan,uVis;varying float vA;varying float vL;varying float vHot;varying float vFl;
+          void main(){
+            /* light spreads outward from between the eyes; each point flares as it catches */
+            float dd=length((position.xy-vec2(0.,1.62))*vec2(1.,.82))/2.35+aRand*.12;
+            float front=uProg*1.3;
+            float p=smoothstep(dd-.07,dd+.02,front);
+            float fl=exp(-pow((front-dd-.03)/.035,2.))*step(.001,uProg);
+            vec3 pos=position+vec3(0.,-.04,-.45)*(1.-p)*(1.-p);
+            pos+=vec3(sin(uT*1.7+aRand*50.),cos(uT*1.3+aRand*37.),sin(uT*1.1+aRand*21.))*(.004+.012*(1.-p));
+            vFl=fl;
             float o=clamp(uOut*1.35-aRand*.35,0.,1.);float oe=o*o*(3.-2.*o);
             float ang=oe*(2.4+aRand*2.2);float cs=cos(ang),sn=sin(ang);
             vec3 q=pos-vec3(0.,1.,0.);q=vec3(q.x*cs-q.z*sn,q.y,q.x*sn+q.z*cs);
             q.xy*=1.+oe*(1.2+aRand*1.8);q.z+=oe*oe*(4.5+aRand*3.);q.y+=oe*.4;
             pos=mix(pos,q+vec3(0.,1.,0.),step(.0001,o));
             vec4 mv=modelViewMatrix*vec4(pos,1.);
-            gl_PointSize=uSize*uPR*(.55+aRand*.45+aLum*.8)/-mv.z;gl_Position=projectionMatrix*mv;
+            gl_PointSize=uSize*uPR*(.55+aRand*.45+aLum*.8+fl*1.4)/-mv.z;gl_Position=projectionMatrix*mv;
             vHot=smoothstep(.09,0.,abs(position.y-uScan));
-            vL=aLum;vA=uVis*(.1+.9*p)*(1.-smoothstep(.45,1.,o))*mix(1.,smoothstep(-.85,-.15,position.y),p);}`,
-        fragmentShader:`varying float vA;varying float vL;varying float vHot;
+            vL=aLum;vA=uVis*(.003+.997*p+fl*.6)*(1.-smoothstep(.45,1.,o))*mix(1.,smoothstep(-.85,-.15,position.y),p);}`,
+        fragmentShader:`varying float vA;varying float vL;varying float vHot;varying float vFl;
           void main(){vec2 c=gl_PointCoord-.5;float d=length(c);if(d>.5)discard;float s=smoothstep(.5,.05,d);
             vec3 deep=vec3(.75,.06,.03),mid=vec3(1.,.28,.12),hi=vec3(1.,.82,.66);
-            vec3 col=mix(deep,mid,smoothstep(.0,.45,vL));col=mix(col,hi,smoothstep(.55,1.,vL));col+=vec3(1.,.6,.45)*vHot*.9;
-            gl_FragColor=vec4(col,s*vA*(.18+vL*1.05+vHot*.6));}`}));
+            vec3 col=mix(deep,mid,smoothstep(.0,.45,vL));col=mix(col,hi,smoothstep(.55,1.,vL));col+=vec3(1.,.6,.45)*vHot*.9;col=mix(col,vec3(1.,.9,.78),vFl*.6);
+            gl_FragColor=vec4(col,s*vA*(.18+vL*1.05+vHot*.6+vFl*.75));}`}));
       const grp=new THREE.Group();grp.add(pts);scene.add(grp);
 
       /* floating dust for depth */
@@ -913,31 +923,27 @@ window.__introActive=true;
       start=performance.now();
       function frame(){const t=(performance.now()-start)/1000;
         U.uT.value=t;gU.uT.value=t;
-        /* timeline: GREETINGS alone, a spark ignites, the face implodes in, a shockwave locks it */
-        const T1=reduce?0:2.3,T2=reduce?0:2.5,T3=reduce?0:4.8;
-        U.uVis.value=reduce?1:clamp((t-T1)/.4);
-        U.uProg.value=reduce?1:ease(clamp((t-T2)/(T3-T2)));
+        /* timeline: GREETINGS holds the stage alone, then the face slowly lights up from the eyes outward */
+        const T1=reduce?0:3.6,T2=reduce?0:3.6,T3=reduce?0:7.2;
+        U.uVis.value=1;
+        U.uProg.value=reduce?1:clamp((t-T2)/(T3-T2));
         const port=cam.aspect<1,zEnd=port?7.6:4.7,textY=1.62,lyEnd=port?1.0:1.12;
-        const ph1=reduce?1:out3(clamp(t/T1)),ph2=ease(clamp((t-T2)/(T3-T2+.4)));
+        const ph1=reduce?1:out3(clamp(t/T1)),ph2=reduce?1:ease(clamp((t-T2)/(T3-T2+.6)));
         const push=tOut===null?0:ease(clamp((t-tOut)/2.2))*1.8;
-        let z=(zEnd+1.1-.35*ph1)+(-(1.1-.35))*ph2-push,ly=textY+(lyEnd-textY)*ph2;
-        const shake=t>T3?Math.exp(-(t-T3)*5)*.03:0;
+        let z=(zEnd+.9-.3*ph1)-.6*ph2-push,ly=textY+(lyEnd-textY)*ph2;
         const breathe=Math.sin(t*1.1)*.012;
-        cam.position.set(mouse.x*.12+Math.sin(t*63)*shake,ly+.06+mouse.y*.08+breathe+Math.cos(t*57)*shake,z);look.set(0,ly,0);cam.lookAt(look);
+        cam.position.set(mouse.x*.12,ly+.06+mouse.y*.08+breathe,z);look.set(0,ly,0);cam.lookAt(look);
         grp.rotation.y+=((mouse.x*.1+Math.sin(t*.45-.6)*.06)-grp.rotation.y)*.05;
         grp.rotation.x+=((-mouse.y*.04)-grp.rotation.x)*.05;
-        /* GREETINGS: revealed first on its own, then steps back as the face takes over */
+        /* GREETINGS: revealed alone, then softens as the face lights up */
         const dist=z+1.7,visW=2*dist*Math.tan(THREE.MathUtils.degToRad(16))*cam.aspect;greet.scale.setScalar(Math.min(visW*.9,7.2));
-        gU.uReveal.value=reduce?1.15:clamp((t-.25)/1.7)*1.15;
-        gU.uOp.value=(reduce?1:clamp((t-.15)/.7))*(1-.4*ph2)*(tOut===null?1:1-clamp((t-tOut)/.5));
-        /* spark */
-        const sp=clamp((t-T1)/.35),spOut=clamp((t-T2-.2)/.9);spark.material.opacity=reduce?0:sp*(1-spOut);spark.scale.setScalar(.05+sp*1.6+spOut*2.2);
-        /* shockwave rings */
-        const k1=clamp((t-T3)/1.3),k2=clamp((t-T3-.18)/1.5);
-        shock.material.opacity=t>T3&&!reduce?(1-k1)*.85:0;shock.scale.setScalar(.3+out3(k1)*4.2);shock.lookAt(cam.position);
-        shock2.material.opacity=t>T3+.18&&!reduce?(1-k2)*.5:0;shock2.scale.setScalar(.3+out3(k2)*6);shock2.lookAt(cam.position);
-        /* bloom swells with the spark and the shockwave */
-        if(bloom&&tOut===null)bloom.strength=(small?.75:.95)+1.3*Math.exp(-Math.pow((t-T1-.2)/.28,2))+.9*Math.exp(-Math.pow((t-T3)/.3,2));
+        gU.uReveal.value=reduce?1.15:clamp((t-.3)/2.0)*1.15;
+        gU.uOp.value=(reduce?1:clamp((t-.2)/.9))*(1-.45*ph2)*(tOut===null?1:1-clamp((t-tOut)/.5));
+        /* a faint warm glow gathers behind the eyes just before the face ignites */
+        const pre=clamp((t-T1+1.0)/1.0),post=clamp((t-T2-.4)/1.4);spark.material.opacity=reduce?0:pre*(1-post)*.55;spark.scale.setScalar(.2+pre*.8+post*.6);spark.position.set(0,1.62,.35);
+        shock.material.opacity=0;shock2.material.opacity=0;
+        /* bloom rises gently with the light, then settles */
+        if(bloom&&tOut===null)bloom.strength=(small?.75:.95)+.55*Math.sin(Math.PI*clamp((t-T2)/(T3-T2+.8)));
         /* a light scan sweeps down the body once it has formed */
         const sc=((t-T3-.6)%3.6)/1.6;U.uScan.value=t>T3+.6&&sc<1?2.15-sc*3.2:-9;
         dust.rotation.y=t*.02;dust.position.y=Math.sin(t*.3)*.05;
