@@ -33,7 +33,9 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:none}
 ::selection{background:var(--signal);color:var(--ink)}
 :focus-visible{outline:2px solid var(--signal);outline-offset:4px}
 
-#gl{position:fixed;inset:0;width:100%;height:100%;display:block;z-index:0;touch-action:none;transition:opacity 2s cubic-bezier(.4,0,.2,1),filter 2s}
+#gl{position:fixed;inset:0;width:100%;height:100%;display:block;z-index:0;touch-action:none;transition:opacity 2.6s cubic-bezier(.4,0,.2,1),filter 2.6s}
+body.entering .page .ch{transition-duration:1.6s}
+body.entering .page .fade{transition-delay:1.1s}
 body.pre-enter #gl{opacity:0;filter:blur(6px)}
 body.switching #gl{opacity:.15;filter:blur(4px);transition-duration:.65s}
 .grain{position:fixed;inset:-50%;width:200%;height:200%;pointer-events:none;z-index:60;opacity:.07;animation:grain .5s steps(4) infinite}
@@ -47,11 +49,11 @@ body.switching #gl{opacity:.15;filter:blur(4px);transition-duration:.65s}
 .cursor-label.on{opacity:1}
 
 /* intro */
-#loader{position:fixed;inset:0;background:#050505;z-index:500;overflow:hidden;cursor:pointer;transition:opacity 1.7s cubic-bezier(.65,0,.35,1),visibility 0s 1.7s}
+#loader{position:fixed;inset:0;background:#050505;z-index:500;overflow:hidden;cursor:pointer;transition:opacity 2.2s cubic-bezier(.45,0,.25,1),visibility 0s 2.2s}
 #loader.done{opacity:0;visibility:hidden}
 #loader::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;background:radial-gradient(ellipse 75% 70% at 50% 45%,transparent 35%,rgba(0,0,0,.8))}
 #introGL{position:absolute;inset:0;width:100%;height:100%;z-index:1;transition:transform 2s cubic-bezier(.22,.8,.3,1),filter 1.6s ease}
-#loader.done #introGL{transform:scale(1.08);filter:blur(10px)}
+#loader.done #introGL{transform:scale(1.12);filter:blur(14px)}
 .intro-cap{position:absolute;left:0;right:0;top:calc(env(safe-area-inset-top,0px) + 28px);z-index:4;display:flex;justify-content:center;gap:18px;align-items:center;font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:#d8d5cc;opacity:0;transform:translateY(-8px);transition:opacity 1.2s,transform 1.2s cubic-bezier(.2,.7,.2,1)}
 .intro-cap.on{opacity:1;transform:none}
 .intro-cap i{width:44px;height:1px;background:var(--signal);box-shadow:0 0 8px var(--signal)}
@@ -62,6 +64,12 @@ body.switching #gl{opacity:.15;filter:blur(4px);transition-duration:.65s}
 .enter-btn::after{animation-delay:1.2s}
 @keyframes ping{0%{transform:scale(1);opacity:.8}100%{transform:scale(1.9);opacity:0}}
 #loader:hover .enter-btn{background:rgba(255,61,46,.22);transform:scale(1.05)}
+.flash{position:absolute;left:50%;top:42%;width:140vmax;height:140vmax;margin:-70vmax 0 0 -70vmax;z-index:3;pointer-events:none;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,236,224,.85) 0%,rgba(255,150,120,.45) 12%,rgba(255,61,46,.18) 28%,rgba(255,61,46,0) 55%);
+  opacity:0;transform:scale(.15);transition:opacity 1.4s cubic-bezier(.4,0,.2,1),transform 2.4s cubic-bezier(.22,.8,.3,1)}
+#loader.leaving .flash{opacity:.9;transform:scale(1)}
+#loader.done .flash{opacity:0;transition:opacity 1.8s ease}
+#loader.leaving .intro-cap,#loader.leaving .loader-count{opacity:0;transition:opacity .8s}
 .enter-hint{white-space:nowrap;font-size:10px;letter-spacing:.32em;text-transform:uppercase;color:#a9a59c}
 .loader-count{position:absolute;bottom:26px;right:30px;z-index:4;font-size:10px;letter-spacing:.2em;color:#5d5a55;font-variant-numeric:tabular-nums}
 .loader-fallback{position:absolute;left:0;right:0;top:38%;z-index:2;text-align:center;font-family:"Italiana",serif;text-transform:uppercase;font-size:clamp(48px,12vw,200px);letter-spacing:.12em;color:#f3f1ea;text-shadow:0 0 40px rgba(255,61,46,.5);display:none}
@@ -237,6 +245,7 @@ nav ul a sup{font-size:8px;margin-right:4px;opacity:.6}
   <div class="loader-fallback" id="greetFallback">Greetings</div>
   <div class="intro-cap" id="introCap"><span>Nishant Chakravarthy</span><i></i><span>Creative Developer</span></div>
   <div class="enter" id="enter"><div class="enter-btn">Enter</div><div class="enter-hint" id="enterHint">Click anywhere to enter</div></div>
+  <div class="flash" aria-hidden="true"></div>
   <div class="loader-count" id="count">000</div>
 </div>
 <div class="veil" id="veil"></div>
@@ -605,16 +614,20 @@ function initGL(){
     composer.setSize(innerWidth,innerHeight);addEventListener('resize',()=>composer.setSize(innerWidth,innerHeight));
   }catch(e){console.warn('bloom off',e);composer=null;}}
   const clock=new THREE.Clock();
-  function setScene(name){active_scene=scenes[name];if(composer){renderPass.scene=active_scene;bloom.strength=BLOOM[name];}const u=active_scene.userData;cam.position.set(u.cam[0],u.cam[1],u.cam[2]*zMul*1.35);camTarget.set(u.cam[0],u.cam[1],u.cam[2]*zMul);look.set(...u.look);camLook.copy(look);cam.lookAt(look);
+  let slowDolly=false,entryPending=false;
+  function setScene(name){if(slowDolly&&scenes[name]===active_scene)return;active_scene=scenes[name];if(composer){renderPass.scene=active_scene;bloom.strength=BLOOM[name];}const u=active_scene.userData;const back=entryPending?2.1:1.35;if(entryPending){slowDolly=true;entryPending=false;}cam.position.set(u.cam[0],u.cam[1],u.cam[2]*zMul*back);camTarget.set(u.cam[0],u.cam[1],u.cam[2]*zMul);look.set(...u.look);camLook.copy(look);cam.lookAt(look);
     if(name==='home'){blobU.uHover.value=0;}}
   function frame(){if(window.__introActive){requestAnimationFrame(frame);return;}const t=clock.getElapsedTime();const u=active_scene.userData;
     blobU.uHover.value*=.96;
     u.update(t);
-    cam.position.z+=(camTarget.z-cam.position.z)*.035;
+    const dz=camTarget.z-cam.position.z;cam.position.z+=dz*(slowDolly?.014:.035);if(slowDolly&&Math.abs(dz)<.05)slowDolly=false;
     cam.lookAt(look);
     if(composer)composer.render();else R.render(active_scene,cam);requestAnimationFrame(frame);}
   requestAnimationFrame(frame);
-  return {setScene,goTo,setForm};
+  /* compile every scene's shaders while the intro is idle, so entering never stutters */
+  function warm(){try{Object.values(scenes).forEach(sc=>R.compile(sc,cam));active_scene=home;if(composer){renderPass.scene=home;composer.render();}else R.render(home,cam);}catch(e){}}
+  function prepareEntry(){entryPending=true;}
+  return {setScene,goTo,setForm,warm,prepareEntry};
 }
 
 /* ---------- UI bits tied to scenes ---------- */
@@ -671,13 +684,14 @@ window.__introActive=true;
 (function intro(){
   const L=$('#loader'),cv=$('#introGL'),cap=$('#introCap'),enter=$('#enter'),cnt=$('#count'),fb=$('#greetFallback');
   if(matchMedia('(hover:none)').matches)$('#enterHint').textContent='Tap anywhere to enter';
-  let finished=false,ready=false,tOut=null,raf=0,R=null,start=0;
+  let finished=false,ready=false,warmed=false,tOut=null,raf=0,R=null,start=0;
   const ease=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2, out3=x=>1-Math.pow(1-x,3), clamp=x=>Math.max(0,Math.min(1,x));
-  function finish(){if(finished)return;finished=true;window.__introActive=false;L.classList.add('done');
+  function finish(){if(finished)return;finished=true;
+    if(gl&&gl.prepareEntry){gl.prepareEntry();gl.setScene('home');}window.__introActive=false;setTimeout(()=>navigate(),700);
+    L.classList.add('done');document.body.classList.add('entering');setTimeout(()=>document.body.classList.remove('entering'),3500);
     requestAnimationFrame(()=>document.body.classList.remove('pre-enter'));
-    setTimeout(()=>navigate(),550);
-    setTimeout(()=>{cancelAnimationFrame(raf);if(R)R.dispose();L.remove();},1900);}
-  function requestEnter(){if(!ready||tOut!==null)return;window.__introActive=false;tOut=start?(performance.now()-start)/1000:0;enter.classList.remove('on');cap.classList.remove('on');if(!R)finish();}
+    setTimeout(()=>{cancelAnimationFrame(raf);if(R)R.dispose();L.remove();},2600);}
+  function requestEnter(){if(!ready||tOut!==null)return;if(gl&&gl.warm&&!warmed){warmed=true;gl.warm();}tOut=start?(performance.now()-start)/1000:0;L.classList.add('leaving');enter.classList.remove('on');cap.classList.remove('on');if(!R)finish();}
   L.addEventListener('click',requestEnter);
   L.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();requestEnter();}});
   const fontsReady=document.fonts&&document.fonts.load?Promise.race([Promise.all([document.fonts.load('400 120px Italiana'),document.fonts.load('400 12px "JetBrains Mono"')]),new Promise(r=>setTimeout(r,1800))]):Promise.resolve();
@@ -745,12 +759,15 @@ window.__introActive=true;
           void main(){float p=clamp(uProg*1.6-aRand*.6,0.,1.);p=p*p*(3.-2.*p);
             vec3 pos=mix(aStart,position,p);
             pos+=vec3(sin(uT*1.7+aRand*50.),cos(uT*1.3+aRand*37.),sin(uT*1.1+aRand*21.))*(.004+.03*(1.-p));
-            float o=clamp(uOut*1.4-aRand*.4,0.,1.);o=o*o;
-            pos+=(normalize(position-vec3(0.,1.,-1.))*(1.5+aRand*3.)+vec3(0.,.6,2.5))*o;
+            float o=clamp(uOut*1.35-aRand*.35,0.,1.);float oe=o*o*(3.-2.*o);
+            float ang=oe*(2.4+aRand*2.2);float cs=cos(ang),sn=sin(ang);
+            vec3 q=pos-vec3(0.,1.,0.);q=vec3(q.x*cs-q.z*sn,q.y,q.x*sn+q.z*cs);
+            q.xy*=1.+oe*(1.2+aRand*1.8);q.z+=oe*oe*(4.5+aRand*3.);q.y+=oe*.4;
+            pos=mix(pos,q+vec3(0.,1.,0.),step(.0001,o));
             vec4 mv=modelViewMatrix*vec4(pos,1.);
             gl_PointSize=uSize*uPR*(.55+aRand*.45+aLum*.8)/-mv.z;gl_Position=projectionMatrix*mv;
             vHot=smoothstep(.09,0.,abs(position.y-uScan));
-            vL=aLum;vA=(.12+.88*p)*(1.-o)*mix(1.,smoothstep(-.85,-.15,position.y),p);}`,
+            vL=aLum;vA=(.12+.88*p)*(1.-smoothstep(.45,1.,o))*mix(1.,smoothstep(-.85,-.15,position.y),p);}`,
         fragmentShader:`varying float vA;varying float vL;varying float vHot;
           void main(){vec2 c=gl_PointCoord-.5;float d=length(c);if(d>.5)discard;float s=smoothstep(.5,.05,d);
             vec3 deep=vec3(.75,.06,.03),mid=vec3(1.,.28,.12),hi=vec3(1.,.82,.66);
@@ -770,7 +787,8 @@ window.__introActive=true;
         const a=reduce?1:ease(clamp((t-.05)/2.3));U.uProg.value=a;
         const port=cam.aspect<1,zEnd=port?7.6:4.7,zStart=port?3.4:2.0;
         const zoom=reduce?1:out3(clamp(t/2.8));
-        const z=zStart+(zEnd-zStart)*zoom,ly=1.55+((port?1.0:1.12)-1.55)*zoom;
+        const push=tOut===null?0:ease(clamp((t-tOut)/2.2))*1.8;
+        const z=zStart+(zEnd-zStart)*zoom-push,ly=1.55+((port?1.0:1.12)-1.55)*zoom;
         const breathe=Math.sin(t*1.1)*.012;
         cam.position.set(mouse.x*.12,ly+.06+mouse.y*.08+breathe,z);look.set(0,ly,0);cam.lookAt(look);
         grp.rotation.y+=((mouse.x*.1+Math.sin(t*.45-.6)*.06)-grp.rotation.y)*.05;
@@ -784,7 +802,8 @@ window.__introActive=true;
         cnt.textContent=String(Math.round(clamp(t/2.4)*100)).padStart(3,'0');
         if(t>1.6)cap.classList.add('on');
         if(t>2.5&&!ready){ready=true;enter.classList.add('on');}
-        if(tOut!==null){const k=ease(clamp((t-tOut)/1.8));U.uOut.value=k;if(bloom)bloom.strength=(small?.75:.95)+Math.sin(k*Math.PI)*.6;if(t-tOut>.75)finish();}
+        if(t>3.4&&!warmed){warmed=true;setTimeout(()=>{if(gl&&gl.warm)gl.warm();},0);}
+        if(tOut!==null){const k=clamp((t-tOut)/2.2);U.uOut.value=k;if(bloom)bloom.strength=(small?.75:.95)+Math.sin(Math.min(k*1.4,1)*Math.PI)*.9;if(t-tOut>1.15)finish();}
         if(composer)composer.render();else R.render(scene,cam);raf=requestAnimationFrame(frame);}
       frame();return true;
     }catch(e){console.warn('intro 3D off',e);return false;}
