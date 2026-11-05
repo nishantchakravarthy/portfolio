@@ -13,7 +13,7 @@ A four-page, 3D portfolio built from scratch with **Three.js** and custom **GLSL
 
 Other features:
 
-- A dramatic intro: "GREETINGS" is revealed on its own, a spark ignites, and 60,000 particles implode into a portrait of me with a shockwave. It waits for a click, then swirls into the site.
+- A cinematic intro: "GREETINGS" holds the screen on its own, then a portrait of me made of 60,000 particles slowly lights up from the eyes outward, each point flaring like an ember as it catches. It waits for a click, then swirls into the site.
 - Soft fades between pages, with a slow camera push-in on each scene and hash routing (`#home`, `#work`, `#about`, `#contact`).
 - A bloom glow effect on desktop, film grain, a custom cursor and a magnetic "Copy email" button.
 - A phone layout: oversized words shrink to fit, the camera pulls back on tall screens, and phones get lighter 3D.
@@ -22,6 +22,7 @@ Other features:
 ## Projects featured
 
 - [Adaptive UI Engine](https://github.com/nishantchakravarthy/Adaptive-UI): adjusts the interface based on behaviour, using a finite state machine in Python.
+- [Neurovia](https://neurovia-tawny.vercel.app): team-built AI dementia screening platform (frontend, database integration, Git).
 - [EduMetrics](https://github.com/nishantchakravarthy/Edumetrics): e-learning analytics with a dropout prediction model and a dashboard.
 - [Car Inventory](https://github.com/nishantchakravarthy/Car-Inventory): web development mini project.
 
