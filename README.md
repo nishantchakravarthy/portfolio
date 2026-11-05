@@ -13,8 +13,8 @@ A four-page, 3D portfolio built from scratch with **Three.js** and custom **GLSL
 
 Other features:
 
-- An intro screen that says "GREETINGS" and greets you in several languages. Click it to skip.
-- A red-and-black curtain transition between pages, with hash routing (`#home`, `#work`, `#about`, `#contact`).
+- An intro where 60,000 particles come together into a glowing particle portrait of me, sampled directly from a photo. A glowing "GREETINGS" is revealed behind it, with a light scan, floating dust and bloom. It waits for a click to enter.
+- Soft fades between pages, with a slow camera push-in on each scene and hash routing (`#home`, `#work`, `#about`, `#contact`).
 - A bloom glow effect on desktop, film grain, a custom cursor and a magnetic "Copy email" button.
 - A phone layout: oversized words shrink to fit, the camera pulls back on tall screens, and phones get lighter 3D.
 - Respects reduced-motion settings.
@@ -40,7 +40,7 @@ The site is static, so any host works. On **Vercel**: Add New → Project → im
 
 ## Tech
 
-Three.js r128 · GLSL · UnrealBloomPass · HTML / CSS / JavaScript · Google Fonts (Anton, Cinzel, Instrument Serif, JetBrains Mono)
+Three.js r128 · GLSL · UnrealBloomPass · HTML / CSS / JavaScript · Google Fonts (Anton, Italiana, Instrument Serif, JetBrains Mono)
 
 ## Contact
 
