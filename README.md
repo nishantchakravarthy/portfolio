@@ -6,14 +6,14 @@ A four-page, 3D portfolio built from scratch with **Three.js** and custom **GLSL
 
 | Page | 3D scene |
 |---|---|
-| **01 Home** | A liquid, iridescent blob in a wireframe shell, with a particle ring and a spinning name band. It follows the cursor and reacts to clicks. |
+| **01 Home** | A liquid, iridescent blob in a wireframe shell, with a spinning name band, a spiral galaxy, light rays and energy pulses. It follows the cursor and pulses on click. |
 | **02 Work** | A ring of curved project cards with reflections over a glowing dot floor. Drag, scroll, use the arrow keys or the arrow buttons. |
 | **03 About** | 9,000 particles that change between four shapes (sphere, torus knot, double helix, cube) and move away from the cursor. |
-| **04 Contact** | A rippling field of light points that rises under the cursor and sends out a ripple on click. |
+| **04 Contact** | A rippling field of light, plus a 3D globe with a beacon on Bengaluru and glowing arcs to cities worldwide. Includes a résumé viewer and download. |
 
 Other features:
 
-- An intro where 60,000 particles come together into a glowing particle portrait of me, sampled directly from a photo. A glowing "GREETINGS" is revealed behind it, with a light scan, floating dust and bloom. It waits for a click to enter.
+- A dramatic intro: "GREETINGS" is revealed on its own, a spark ignites, and 60,000 particles implode into a portrait of me with a shockwave. It waits for a click, then swirls into the site.
 - Soft fades between pages, with a slow camera push-in on each scene and hash routing (`#home`, `#work`, `#about`, `#contact`).
 - A bloom glow effect on desktop, film grain, a custom cursor and a magnetic "Copy email" button.
 - A phone layout: oversized words shrink to fit, the camera pulls back on tall screens, and phones get lighter 3D.
