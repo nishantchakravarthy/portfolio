@@ -229,6 +229,25 @@ nav ul a sup{font-size:8px;margin-right:4px;opacity:.6}
 .socials{display:flex;gap:10px;flex-wrap:wrap}
 @media (max-width:1000px){.contact-main{max-width:100%}.cards{grid-template-columns:1fr 1fr}.resume-card{grid-column:1/-1}}
 @media (max-width:560px){.cards{grid-template-columns:1fr}.email{font-size:22px}}
+/* credentials */
+.creds{margin-top:clamp(28px,5vw,64px);padding-bottom:90px}
+.creds-head{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:18px}
+.creds-title{font-family:var(--display);font-weight:400;font-size:clamp(36px,5vw,72px);text-transform:uppercase;line-height:.9}
+.cert-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.cert{display:flex;flex-direction:column;text-align:left;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:linear-gradient(160deg,rgba(30,30,33,.75),rgba(11,11,12,.7));backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:border-color .3s,transform .45s cubic-bezier(.2,.8,.2,1),box-shadow .45s}
+.cert:hover{border-color:rgba(255,61,46,.55);transform:translateY(-4px);box-shadow:0 24px 50px -24px rgba(255,61,46,.45)}
+.cert-img{display:block;aspect-ratio:1200/848;overflow:hidden;background:#fff;position:relative}
+.cert-img img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+.cert:hover .cert-img img{transform:scale(1.04)}
+.cert-img::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(11,11,12,.55))}
+.cert-body{display:flex;flex-direction:column;gap:3px;padding:12px 14px 14px}
+.cert-kind{align-self:flex-start;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--signal);border:1px solid rgba(255,61,46,.45);border-radius:99px;padding:2px 8px;margin-bottom:4px}
+.cert-body b{font-family:var(--display);font-weight:400;font-size:20px;text-transform:uppercase;letter-spacing:.01em;line-height:1.05}
+.cert-body small{font-size:11px;color:var(--mute)}
+.cert-body .cert-date{color:var(--paper);opacity:.75;font-variant-numeric:tabular-nums}
+.cert-sub{color:var(--mute);font-size:11px}
+@media (max-width:1000px){.cert-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.cert-grid{grid-template-columns:1fr}}
 /* résumé viewer */
 .modal{position:fixed;inset:0;z-index:450;display:grid;place-items:center;padding:24px;background:rgba(5,5,5,.72);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);opacity:0;transition:opacity .45s ease}
 .modal.on{opacity:1}
@@ -384,6 +403,35 @@ nav ul a sup{font-size:8px;margin-right:4px;opacity:.6}
       <div class="morph-btns" id="mBtns"></div>
     </div>
   </div>
+  <div class="creds">
+    <div class="creds-head"><h3 class="creds-title">Credentials</h3><span class="label">6 certificates · click to view</span></div>
+    <div class="cert-grid">
+      <button class="cert ui" type="button" data-src="certs/nptel-computer-networks.jpg" data-title="Computer Networks" data-sub="NPTEL · IIT Indore · Elite · Jul–Oct 2026" data-alt="NPTEL Elite certificate in Computer Networks from IIT Indore, a 12-week course, July to October 2026" data-hover>
+        <span class="cert-img"><img src="certs/nptel-computer-networks.jpg" alt="" loading="lazy" width="1200" height="848"></span>
+        <span class="cert-body"><span class="cert-kind">Certification</span><b>Computer Networks</b><small>NPTEL · IIT Indore · Elite</small><small class="cert-date">Jul–Oct 2026</small></span>
+      </button>
+      <button class="cert ui" type="button" data-src="certs/nasa-space-apps-2026.jpg" data-title="Galactic Problem Solver" data-sub="NASA Space Apps Challenge · Nov 2026" data-alt="NASA Space Apps Challenge 2026 Galactic Problem Solver certificate, November 14 to 15, 2026" data-hover>
+        <span class="cert-img"><img src="certs/nasa-space-apps-2026.jpg" alt="" loading="lazy" width="1200" height="848"></span>
+        <span class="cert-body"><span class="cert-kind">Hackathon</span><b>Galactic Problem Solver</b><small>NASA Space Apps Challenge</small><small class="cert-date">Nov 2026</small></span>
+      </button>
+      <button class="cert ui" type="button" data-src="certs/udaan-2026.jpg" data-title="UDAAN Business Plan Competition" data-sub="NHCIIE · New Horizon College of Engineering · Jul 2026" data-alt="Certificate of participation in the UDAAN Intra-Institutional Business Plan Competition 2026, July 27 to 29, 2026" data-hover>
+        <span class="cert-img"><img src="certs/udaan-2026.jpg" alt="" loading="lazy" width="1200" height="848"></span>
+        <span class="cert-body"><span class="cert-kind">Competition</span><b>UDAAN Business Plan Competition</b><small>NHCIIE · New Horizon College of Engineering</small><small class="cert-date">Jul 2026</small></span>
+      </button>
+      <button class="cert ui" type="button" data-src="certs/intel-1millionminds.jpg" data-title="Intel #1MillionMinds" data-sub="Intel · Reel Challenge on AI PCs · Sep 2026" data-alt="Intel #1MillionMinds certificate of appreciation for the Intel Reel Challenge, September 23, 2026" data-hover>
+        <span class="cert-img"><img src="certs/intel-1millionminds.jpg" alt="" loading="lazy" width="1200" height="848"></span>
+        <span class="cert-body"><span class="cert-kind">Recognition</span><b>Intel #1MillionMinds</b><small>Intel · Reel Challenge on AI PCs</small><small class="cert-date">Sep 2026</small></span>
+      </button>
+      <button class="cert ui" type="button" data-src="certs/ai-unplugged-phase-shift-2025.jpg" data-title="AI Unplugged" data-sub="Phase Shift 2025 · BMS College of Engineering · Sep 2025" data-alt="Certificate of participation in AI Unplugged at Phase Shift 2025, BMS College of Engineering, September 19 to 20, 2025" data-hover>
+        <span class="cert-img"><img src="certs/ai-unplugged-phase-shift-2025.jpg" alt="" loading="lazy" width="1200" height="848"></span>
+        <span class="cert-body"><span class="cert-kind">Event</span><b>AI Unplugged</b><small>Phase Shift 2025 · BMS College of Engineering</small><small class="cert-date">Sep 2025</small></span>
+      </button>
+      <button class="cert ui" type="button" data-src="certs/iste-intellect-ascent.jpg" data-title="Intellect Ascent" data-sub="20th ISTE Karnataka State Student Convention · Mar 2025" data-alt="Certificate of participation in Intellect Ascent at the 20th ISTE Karnataka State Level Student Convention, March 28, 2025" data-hover>
+        <span class="cert-img"><img src="certs/iste-intellect-ascent.jpg" alt="" loading="lazy" width="1200" height="848"></span>
+        <span class="cert-body"><span class="cert-kind">Event</span><b>Intellect Ascent</b><small>20th ISTE Karnataka State Student Convention</small><small class="cert-date">Mar 2025</small></span>
+      </button>
+    </div>
+  </div>
 </section>
 
 <!-- 04 CONTACT -->
@@ -434,6 +482,19 @@ nav ul a sup{font-size:8px;margin-right:4px;opacity:.6}
     </div>
   </div>
 </section>
+
+<div class="modal" id="certModal" role="dialog" aria-modal="true" aria-labelledby="certTitle" hidden>
+  <div class="modal-card">
+    <header>
+      <span><span class="label" id="certTitle">Certificate</span><br><small id="certSub" class="cert-sub"></small></span>
+      <span class="modal-actions">
+        <a class="pill sm" id="certOpen" href="#" target="_blank" rel="noopener" data-hover>Open full size ↗</a>
+        <button class="pill sm" id="closeCert" type="button" data-hover aria-label="Close certificate">Close ✕</button>
+      </span>
+    </header>
+    <div class="modal-body"><img id="certImg" src="" alt=""></div>
+  </div>
+</div>
 
 <div class="modal" id="resumeModal" role="dialog" aria-modal="true" aria-label="Résumé of Nishant Chakravarthy" hidden>
   <div class="modal-card">
@@ -976,6 +1037,15 @@ window.__introActive=true;
       setTimeout(()=>{ready=true;enter.classList.add('on');cnt.textContent='100';},1500);}
   });
 })();
+
+/* ---------- certificate viewer ---------- */
+(function(){const m=$('#certModal'),img=$('#certImg'),closeB=$('#closeCert');let last=null;
+  function open(b){last=b;img.src=b.dataset.src;img.alt=b.dataset.alt;$('#certTitle').textContent=b.dataset.title;$('#certSub').textContent=b.dataset.sub;$('#certOpen').href=b.dataset.src;
+    m.hidden=false;requestAnimationFrame(()=>m.classList.add('on'));closeB.focus();}
+  function close(){m.classList.remove('on');setTimeout(()=>{m.hidden=true;if(last)last.focus();},450);}
+  $$('.cert').forEach(b=>b.addEventListener('click',()=>open(b)));closeB.addEventListener('click',close);
+  m.addEventListener('click',e=>{if(e.target===m)close();});
+  addEventListener('keydown',e=>{if(e.key==='Escape'&&!m.hidden)close();});})();
 
 /* ---------- résumé viewer ---------- */
 (function(){const m=$('#resumeModal'),openB=$('#openResume'),closeB=$('#closeResume');let last=null;

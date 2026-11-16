@@ -9,6 +9,7 @@ A four-page, 3D portfolio built from scratch with **Three.js** and custom **GLSL
 | **01 Home** | A liquid, iridescent blob in a wireframe shell, with a spinning name band, a spiral galaxy, light rays and energy pulses. It follows the cursor and pulses on click. |
 | **02 Work** | A ring of curved project cards with reflections over a glowing dot floor. Drag, scroll, use the arrow keys or the arrow buttons. |
 | **03 About** | 9,000 particles that change between four shapes (sphere, torus knot, double helix, cube) and move away from the cursor. |
+| **03 About · Credentials** | Six certificates (NPTEL, NASA Space Apps, Intel, UDAAN, Phase Shift, ISTE) in a grid, each opening in a viewer. |
 | **04 Contact** | A rippling field of light, plus a 3D globe with a beacon on Bengaluru and glowing arcs to cities worldwide. Includes a résumé viewer and download. |
 
 Other features:
