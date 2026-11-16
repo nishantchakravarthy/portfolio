@@ -21,6 +21,8 @@ Other features:
 
 ## Projects featured
 
+- [Field Shift](https://field-shift-blond.vercel.app) (team project, NASA Space Apps 2026): 3D map of crop suitability across 131 South Indian districts, today and in 2050. I led the map and time slider.
+- [VayuVaani](https://github.com/nishantchakravarthy/vayuvaani): 48-hour PM2.5 forecasts for Bengaluru with multilingual health alerts (college mini project).
 - [Adaptive UI Engine](https://github.com/nishantchakravarthy/Adaptive-UI): adjusts the interface based on behaviour, using a finite state machine in Python.
 - [Neurovia](https://neurovia-tawny.vercel.app): team-built AI dementia screening platform (frontend, database integration, Git).
 - [EduMetrics](https://github.com/nishantchakravarthy/Edumetrics): e-learning analytics with a dropout prediction model and a dashboard.
