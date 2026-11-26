@@ -1,6 +1,6 @@
 # Nishant Chakravarthy — Portfolio
 
-A four-page, 3D portfolio built from scratch with **Three.js** and custom **GLSL** shaders. No framework and no build step: the whole site is one `index.html` file.
+A four-page, 3D portfolio built from scratch with **Three.js** and custom **GLSL** shaders. No framework and no build step: plain HTML, CSS and JavaScript.
 
 ## Pages
 
@@ -28,6 +28,15 @@ Other features:
 - [Neurovia](https://neurovia-tawny.vercel.app): team-built AI dementia screening platform (frontend, database integration, Git).
 - [EduMetrics](https://github.com/nishantchakravarthy/Edumetrics): e-learning analytics with a dropout prediction model and a dashboard.
 - [Car Inventory](https://github.com/nishantchakravarthy/Car-Inventory): web development mini project.
+
+## Structure
+
+```
+index.html      page markup
+css/style.css   layout, type, transitions and responsive rules
+js/main.js      Three.js scenes, GLSL shaders, routing and interactions
+certs/          certificate images for the Credentials page
+```
 
 ## Run locally
 
