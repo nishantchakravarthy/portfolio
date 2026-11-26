@@ -32,10 +32,13 @@ Other features:
 ## Structure
 
 ```
-index.html      page markup
-css/style.css   layout, type, transitions and responsive rules
-js/main.js      Three.js scenes, GLSL shaders, routing and interactions
-certs/          certificate images for the Credentials page
+index.html               page markup
+css/style.css            layout, type, transitions, scroll-driven reveals, responsive rules
+js/boot.js               loads the shaders, then starts the site
+js/main.js               Three.js scenes, routing and interactions
+shaders/*.vert, *.frag   GLSL vertex and fragment shaders for every 3D scene
+portrait-particles.png   depth and edge map the intro portrait is sampled from
+certs/                   certificate images for the Credentials page
 ```
 
 ## Run locally

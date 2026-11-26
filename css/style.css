@@ -201,7 +201,7 @@ nav ul a sup{font-size:8px;margin-right:4px;opacity:.6}
 @media (max-width:900px){.about-grid{grid-template-columns:minmax(0,1fr)}.morph-ui{justify-self:start;text-align:left;justify-items:start;padding-bottom:80px}.morph-btns{justify-content:flex-start}}
 
 /* CONTACT */
-#contact .big{font-size:clamp(64px,11.5vw,200px);text-shadow:0 10px 60px rgba(0,0,0,.6)}
+#contact .big{font-size:clamp(64px,min(11.5vw,15vh),200px);text-shadow:0 10px 60px rgba(0,0,0,.6)}
 .contact-main{max-width:min(760px,62vw);display:grid;grid-template-columns:minmax(0,1fr);gap:22px;padding-bottom:70px}
 .contact-lede{color:var(--mute);font-size:15px;max-width:46ch}
 .email-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
@@ -282,4 +282,35 @@ nav ul a sup{font-size:8px;margin-right:4px;opacity:.6}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
   .ch{transform:none;opacity:1}.fade{opacity:1;transform:none;filter:none}
+}
+
+/* ---------- Progressive CSS enhancements ---------- */
+html{color-scheme:dark;accent-color:var(--signal);-webkit-tap-highlight-color:transparent}
+h1,h2,h3{text-wrap:balance}
+p,li,dd,small{text-wrap:pretty}
+.work-hint{text-align:right}
+
+/* themed scrollbars on the scrolling pages */
+.page.scrolly{scrollbar-width:thin;scrollbar-color:rgba(255,61,46,.5) transparent;overscroll-behavior:contain}
+.page.scrolly::-webkit-scrollbar{width:6px}
+.page.scrolly::-webkit-scrollbar-track{background:transparent}
+.page.scrolly::-webkit-scrollbar-thumb{background:rgba(255,61,46,.45);border-radius:99px}
+
+/* cursor spotlight + glowing edge on cards */
+.card{position:relative;isolation:isolate}
+.card::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:-1;
+  background:radial-gradient(280px circle at var(--mx,50%) var(--my,0%),rgba(255,61,46,.16),transparent 65%);opacity:0;transition:opacity .35s}
+.card::before{content:"";position:absolute;inset:-1px;border-radius:inherit;padding:1px;pointer-events:none;
+  background:radial-gradient(200px circle at var(--mx,50%) var(--my,0%),rgba(255,61,46,.9),transparent 70%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .35s}
+.card:hover::after,.card:hover::before{opacity:1}
+
+/* scroll-driven reveals where the browser supports them (pure CSS, no JS) */
+@keyframes rise-in{from{opacity:0;translate:0 28px;filter:blur(4px)}to{opacity:1;translate:0 0;filter:none}}
+@supports (animation-timeline:view()){
+  @media (prefers-reduced-motion:no-preference){
+    .page.shown .cred-row,.page.shown .card,.page.shown .facts li,
+    .page.shown .dossier dl>*,.page.shown .toolkit>div,.page.shown .stats>div{
+      animation:rise-in linear both;animation-timeline:view();animation-range:entry 5% entry 80%}
+  }
 }
