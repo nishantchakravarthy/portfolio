@@ -50,3 +50,10 @@ Three.js r128 · GLSL · UnrealBloomPass · HTML / CSS / JavaScript · Google Fo
 
 - Email: nishant.chakravarthy@gmail.com
 - [LinkedIn](https://www.linkedin.com/in/nishant-chakravarthy-855406350/) · [Instagram](https://www.instagram.com/nish.frr)
+
+
+## License
+
+The site's code (HTML, CSS and JavaScript) is released under the [MIT License](LICENSE).
+
+Personal content is not covered by that license and stays all rights reserved: my resume (`Nishant-Chakravarthy-Resume.pdf`), photos, certificate images in `certs/`, and the written text about me. Please don't reuse these.
