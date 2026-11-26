@@ -1,0 +1,52 @@
+# Nishant Chakravarthy — Portfolio
+
+A four-page, 3D portfolio built from scratch with **Three.js** and custom **GLSL** shaders. No framework and no build step: the whole site is one `index.html` file.
+
+## Pages
+
+| Page | 3D scene |
+|---|---|
+| **01 Home** | A liquid, iridescent blob in a wireframe shell, with a spinning name band, a spiral galaxy, light rays and energy pulses. It follows the cursor and pulses on click. |
+| **02 Work** | A ring of curved project cards with reflections over a glowing dot floor. Drag, scroll, use the arrow keys or the arrow buttons. |
+| **03 About** | 9,000 particles that change between four shapes (sphere, torus knot, double helix, cube) and move away from the cursor. |
+| **04 Credentials** | Eight certificates float on a 3D arc, tinted to the site palette; the one you hover comes forward in full colour, and clicking opens it. |
+| **05 Contact** | A rippling field of light, plus a 3D globe with a beacon on Bengaluru and glowing arcs to cities worldwide. Includes a résumé viewer and download. |
+
+Other features:
+
+- A cinematic intro: "GREETINGS" holds the screen on its own, then a portrait of me made of 60,000 particles slowly lights up from the eyes outward, each point flaring like an ember as it catches. It waits for a click, then swirls into the site.
+- Soft fades between pages, with a slow camera push-in on each scene and hash routing (`#home`, `#work`, `#about`, `#credentials`, `#contact`).
+- A bloom glow effect on desktop, film grain, a custom cursor and a magnetic "Copy email" button.
+- A phone layout: oversized words shrink to fit, the camera pulls back on tall screens, and phones get lighter 3D.
+- Respects reduced-motion settings.
+
+## Projects featured
+
+- [Field Shift](https://field-shift-blond.vercel.app) (team project, NASA Space Apps 2026): 3D map of crop suitability across 131 South Indian districts, today and in 2050. I led the map and time slider.
+- [VayuVaani](https://github.com/nishantchakravarthy/vayuvaani): 48-hour PM2.5 forecasts for Bengaluru with multilingual health alerts (college mini project).
+- [Adaptive UI Engine](https://github.com/nishantchakravarthy/Adaptive-UI): adjusts the interface based on behaviour, using a finite state machine in Python.
+- [Neurovia](https://neurovia-tawny.vercel.app): team-built AI dementia screening platform (frontend, database integration, Git).
+- [EduMetrics](https://github.com/nishantchakravarthy/Edumetrics): e-learning analytics with a dropout prediction model and a dashboard.
+- [Car Inventory](https://github.com/nishantchakravarthy/Car-Inventory): web development mini project.
+
+## Run locally
+
+Open `index.html` in a browser, or serve the folder:
+
+```bash
+python -m http.server 8000
+# then visit http://localhost:8000
+```
+
+## Deploy
+
+The site is static, so any host works. On **Vercel**: Add New → Project → import this repo → Deploy. No settings are needed.
+
+## Tech
+
+Three.js r128 · GLSL · UnrealBloomPass · HTML / CSS / JavaScript · Google Fonts (Anton, Italiana, Instrument Serif, JetBrains Mono)
+
+## Contact
+
+- Email: nishant.chakravarthy@gmail.com
+- [LinkedIn](https://www.linkedin.com/in/nishant-chakravarthy-855406350/) · [Instagram](https://www.instagram.com/nish.frr)
